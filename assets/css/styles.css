@@ -24,6 +24,12 @@ html, body {
 /* Remove margens padrão do body para permitir full-bleed */
 body { margin: 0; padding: 0;}
 
+/* Prevenir overflow horizontal */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
 .bio-card {
   width: 100%;
   max-width: 50vw;
@@ -56,28 +62,7 @@ body { margin: 0; padding: 0;}
   object-fit: cover;
 } */
 
-/* Limitar largura da primeira imagem em telas maiores, mantendo o fundo full-bleed */
-.sections .link-section:first-child a {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: .75rem; /* alinha com padding lateral do container */
-  padding-right: .75rem;
-  max-width: 100%;
-}
 
-@media (min-width: 768px) { /* md */
-  .sections .link-section:first-child a { max-width: min(50vw, 720px); }
-}
-@media (min-width: 992px) { /* lg */
-  .sections .link-section:first-child a { max-width: min(50vw, 960px); }
-}
-@media (min-width: 1200px) { /* xl */
-  .sections .link-section:first-child a { max-width: min(50vw, 1140px); }
-}
-@media (min-width: 1400px) { /* xxl */
-  .sections .link-section:first-child a { max-width: min(50vw, 1320px); }
-}
 
 .sections .link-section a {
   display: block;
@@ -93,26 +78,66 @@ body { margin: 0; padding: 0;}
 /* Gradiente atrás da primeira sessão */
 .sections .link-section:first-child {
   position: relative;
-  overflow: visible; /* permite que o gradiente ultrapasse o container */
-  /* full-bleed horizontal mesmo dentro do container */
-  /* margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw); */
-  /* border: 0;               remove a linha/borda superior */
-  /*border-radius: 0;        /* sem arredondamento contra a borda superior da tela */
+  overflow: hidden; /* muda para hidden para evitar overflow */
   background: transparent; /* evita qualquer overlay claro no topo */
   margin-top: 0 !important;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  width: 100vw;
+  border-radius: 0;
 }
+
 .sections .link-section:first-child::before {
   content: "";
   position: absolute;
   top: -2px; bottom: -2px;
-  left: 50%; transform: translateX(-50%);
-  width: 99.27vw;
+  left: 0;
+  right: 0;
+  width: 100%;
   background: linear-gradient(180deg, #2f013f 0%, #171514 100%);
   z-index: 0;
   pointer-events: none;
 }
-.sections .link-section:first-child a,
+
+.sections .link-section:first-child a {
+  position: relative;
+  z-index: 1;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0; /* remove padding para alinhar com as outras imagens */
+  padding-right: 0;
+  max-width: 100%;
+  width: 100%;
+}
+
+/* Ajustar a largura da primeira imagem para ser igual às outras */
+@media (min-width: 576px) { /* sm */
+  .sections .link-section:first-child a {
+    max-width: 540px; /* largura do container-sm */
+  }
+}
+@media (min-width: 768px) { /* md */
+  .sections .link-section:first-child a {
+    max-width: 720px; /* largura do container-md */
+  }
+}
+@media (min-width: 992px) { /* lg */
+  .sections .link-section:first-child a {
+    max-width: 720px; /* mantém largura do md */
+  }
+}
+@media (min-width: 1200px) { /* xl */
+  .sections .link-section:first-child a {
+    max-width: 720px; /* mantém largura do md */
+  }
+}
+@media (min-width: 1400px) { /* xxl */
+  .sections .link-section:first-child a {
+    max-width: 720px; /* mantém largura do md */
+  }
+}
+
 .sections .link-section:first-child .link-img {
   position: relative;
   z-index: 1;
